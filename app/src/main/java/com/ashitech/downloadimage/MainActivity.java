@@ -17,13 +17,13 @@ import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView downlaodIamge;
+    ImageView downloadIamge;
     public void downloadIamge(View view){
-        FetchImage task=new FetchImage();
+        FetchImage task = new FetchImage();
         Bitmap myBitMap;
         try {
-            myBitMap=task.execute("http://www.thehindu.com/entertainment/movies/article19906429.ece/alternates/FREE_300/THJVNDULQUER").get();
-            downlaodIamge.setImageBitmap(myBitMap);
+            myBitMap = task.execute("http://www.thehindu.com/entertainment/movies/article19906429.ece/alternates/FREE_300/THJVNDULQUER").get();
+            downloadIamge.setImageBitmap(myBitMap);
             Log.i("button","download button working");
 
         } catch (InterruptedException e) {
@@ -39,20 +39,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         downlaodIamge=findViewById(R.id.downloadImage);
+         downloadIamge = findViewById(R.id.downloadImage);
 
     }
     public class FetchImage extends AsyncTask<String,Void,Bitmap> {
 
         @Override
-        protected Bitmap doInBackground(String... strings) {
+        protected Bitmap doInBackground(String... urls) {
             Bitmap myImage;
             try {
-                URL url=new URL(strings[0]);
+                URL url = new URL(urls[0]);
                 HttpURLConnection connection=(HttpURLConnection)url.openConnection();
                 connection.connect();
                 InputStream inputStream=connection.getInputStream();
-                myImage= BitmapFactory.decodeStream(inputStream);
+                myImage = BitmapFactory.decodeStream(inputStream);
                 return myImage;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
